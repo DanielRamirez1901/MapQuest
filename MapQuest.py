@@ -4,7 +4,7 @@ import requests
 MAIN_API = "https://www.mapquestapi.com/directions/v2/route?"
 KEY = "74W0oLyxXK4C9GKbl8mr6l7y5eL28T2F"
 
-UNITS = {"1": ("kilometers", 1.61), "2": ("meters", 1609.34), "3": ("miles", 1)}
+UNITS = {"1": ("kilometers", 1.61), "2": ("meters", 1609.34), "3": ("miles", 1), "4": ("feet", 5280), "5": ("yards", 1760)}
 
 def get_directions(orig, dest, units):
     url = MAIN_API + urllib.parse.urlencode({"key": KEY, "from": orig, "to": dest})
@@ -57,8 +57,11 @@ while True:
     if dest in ("quit", "q"):
         break
     while True:
-        units = input("Select units (1 for kilometers, 2 for meters, 3 for miles): ")
+        print("Select units:")
+        for key, value in UNITS.items():
+            print(f"{key}. {value[0]}")
+        units = input("Enter unit number: ")
         if units in UNITS:
             break
-        print("Invalid selection. Please enter 1, 2, or 3.")
+        print("Invalid selection. Please enter a valid unit number.")
     get_directions(orig, dest, units)
